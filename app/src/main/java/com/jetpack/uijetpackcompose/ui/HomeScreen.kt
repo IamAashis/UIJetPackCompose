@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -52,7 +53,8 @@ fun HomeScreen() {
                 .padding(10.dp)
 //                .verticalScroll(rememberScrollState())
         ) {
-            SearchSection()
+//            SearchSection()
+            SearchView()
             ChipSection(types = mutableListOf("Dates", "Guests"))
             FeatureSection(
                 listOf(
@@ -187,27 +189,40 @@ fun RatingSystem(
 }
 
 @Composable
-fun SearchSection() {
+fun SearchView() {
+    var searchText by remember { mutableStateOf("") }
+    var isFocused by remember { mutableStateOf(false) }
 
-    val text = remember { mutableStateOf(TextFieldValue("")) }
-    TextField(
-        value = text.value,
-        onValueChange = { text.value = it },
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_search),
-                contentDescription = "Back button"
-            )
+    OutlinedTextField(
+        value = searchText,
+        onValueChange = { searchText = it },
+        label = {
+            if (!isFocused) {
+                Text("Search")
+            } else {
+                null
+            }
         },
-        keyboardOptions = KeyboardOptions.Default.copy(
+        placeholder = { Text("Search...") },
+        leadingIcon = {
+            Icon(Icons.Filled.Search, "Search")
+        },
+        keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Search
         ),
-        keyboardActions = KeyboardActions(onSearch = {
-            // Perform search with searchText
-        }),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+            }
+        ),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = SearchColor,
+            unfocusedBorderColor = SearchColor
+        ),
+
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 10.dp, end = 20.dp, top = 20.dp, bottom = 20.dp),
+            .padding(start = 10.dp, end = 20.dp, top = 20.dp, bottom = 20.dp)
+            .onFocusChanged { isFocused = it.isFocused },
     )
 }
 
@@ -239,7 +254,7 @@ fun FeatureSection(features: List<Features>) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(1),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            modifier = Modifier.height(150.dp)
+            modifier = Modifier.height(140.dp)
         ) {
             items(features.size) {
                 FeatureItem(feature = features[it])
@@ -250,7 +265,6 @@ fun FeatureSection(features: List<Features>) {
 
 @Composable
 fun FeatureItem(feature: Features) {
-
     Box(
         modifier = Modifier.padding(end = 20.dp)
     ) {
@@ -258,11 +272,12 @@ fun FeatureItem(feature: Features) {
             Image(
                 painter = painterResource(feature.iconId),
                 contentDescription = "My Image",
-//                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .width(130.dp)
+                    .height(90.dp), contentScale = ContentScale.Crop
             )
             Box(
-//                modifier = Modifier
-//                    .fillMaxWidth()
+
             ) {
                 Text(
                     text = feature.title, modifier = Modifier.fillMaxWidth(), color = Color.Black

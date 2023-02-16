@@ -11,4 +11,5 @@ val ColorBoxBorder= Color(0xFFE9E9E9)
 val StarColor= Color(0xFF007279)
 val TextColor = Color(0xFFA8A8A7)
 val TextGrey = Color(0xFF967A60)
+val SearchColor = Color(0xFFD6D6D6)
 
