@@ -45,12 +45,10 @@ import com.jetpack.uijetpackcompose.ui.theme.*
 fun HomeScreen() {
     val scrollState = rememberScrollState()
     Box( // or whatever your parent composable is
-        modifier = Modifier
-            .scrollable(state = scrollState, orientation = Orientation.Vertical)
+        modifier = Modifier.scrollable(state = scrollState, orientation = Orientation.Vertical)
     ) {
         Column(
-            modifier = Modifier
-                .padding(10.dp)
+            modifier = Modifier.padding(10.dp)
 //                .verticalScroll(rememberScrollState())
         ) {
 //            SearchSection()
@@ -65,9 +63,42 @@ fun HomeScreen() {
             )
             TopRatedExperience(
                 listOf(
-                    Experience("This is title", "", R.drawable.houses, false, "", ""),
-                    Experience("This is title", "", R.drawable.houses, false, "", ""),
-                    Experience("This is title", "", R.drawable.houses, false, "", "")
+                    Experience(
+                        "This is title",
+                        "desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+                        R.drawable.ic_image_one,
+                        false,
+                        "",
+                        3
+                    ), Experience(
+                        "This is title",
+                        "Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+                        R.drawable.ic_image_two,
+                        false,
+                        "From Ft108,712 per night",
+                        4
+                    ), Experience(
+                        "This is title",
+                        "There are many variations of passages of Lorem Ipsum available, but the majority",
+                        R.drawable.ic_image_three,
+                        false,
+                        "From Ft108,712 per night",
+                        5
+                    ), Experience(
+                        "This is title",
+                        "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a ",
+                        R.drawable.ic_image_four,
+                        false,
+                        "From Ft108,712 per night",
+                        4
+                    ), Experience(
+                        "This is title",
+                        "Section 1.10.32 of de Finibus Bonorum et Malorum, written by Cicero in 45 BC",
+                        R.drawable.ic_image_five,
+                        false,
+                        "From Ft108,712 per night",
+                        3
+                    )
                 )
             )
         }
@@ -114,7 +145,8 @@ fun ExperienceSection(experience: Experience) {
                 contentDescription = "My Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(), contentScale = ContentScale.Crop
+                    .fillMaxHeight(),
+                contentScale = ContentScale.Crop
             )
             Icon(
                 painter = painterResource(id = R.drawable.ic_save),
@@ -124,40 +156,40 @@ fun ExperienceSection(experience: Experience) {
             )
         }
         Text(
-            text = "What can we help you find",
+            text = experience.title,
             color = TextGrey,
             modifier = Modifier.padding(top = 5.dp),
             fontSize = 15.sp
         )
         Text(
-            text = "What can we help you find, Sandor?",
+            text = experience.subTitle,
             color = Color.Black,
             modifier = Modifier.padding(top = 2.dp),
-            fontSize = 15.sp, fontWeight = FontWeight.Bold
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold
         )
         Text(
-            text = "What can we help you find, Sandor?",
+            text = experience.sizes,
             color = TextColor,
             modifier = Modifier.padding(top = 2.dp),
-            fontSize = 13.sp, fontWeight = FontWeight.Thin
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Thin
         )
-        RatingSystem(5, {})
+        RatingSystem(experience.rating, {})
     }
 }
 
 
 @Composable
 fun RatingSystem(
-    maxRating: Int = 5,
-    onRatingChanged: (Int) -> Unit
+    maxRating: Int = 5, onRatingChanged: (Int) -> Unit
 ) {
     var currentRating by remember { mutableStateOf(0) }
 
     Row {
         for (i in 1..maxRating) {
             if (i <= currentRating) {
-                Icon(
-                    imageVector = Icons.Filled.Star,
+                Icon(imageVector = Icons.Filled.Star,
                     contentDescription = "Filled Star",
                     tint = StarColor,
                     modifier = Modifier
@@ -166,11 +198,9 @@ fun RatingSystem(
                             onRatingChanged(i)
                         }
                         .height(13.dp)
-                        .width(13.dp)
-                )
+                        .width(13.dp))
             } else {
-                Icon(
-                    imageVector = Icons.Outlined.Star,
+                Icon(imageVector = Icons.Outlined.Star,
                     contentDescription = "Outlined Star",
                     tint = StarColor,
                     modifier = Modifier
@@ -179,8 +209,7 @@ fun RatingSystem(
                             onRatingChanged(i)
                         }
                         .height(13.dp)
-                        .width(13.dp)
-                )
+                        .width(13.dp))
             }
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -210,13 +239,9 @@ fun SearchView() {
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Search
         ),
-        keyboardActions = KeyboardActions(
-            onSearch = {
-            }
-        ),
+        keyboardActions = KeyboardActions(onSearch = {}),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = SearchColor,
-            unfocusedBorderColor = SearchColor
+            focusedBorderColor = SearchColor, unfocusedBorderColor = SearchColor
         ),
 
         modifier = Modifier
@@ -274,7 +299,8 @@ fun FeatureItem(feature: Features) {
                 contentDescription = "My Image",
                 modifier = Modifier
                     .width(130.dp)
-                    .height(90.dp), contentScale = ContentScale.Crop
+                    .height(90.dp),
+                contentScale = ContentScale.Crop
             )
             Box(
 
@@ -290,65 +316,40 @@ fun FeatureItem(feature: Features) {
 @Composable
 fun MyBottomNavigation() {
     BottomNavigation(backgroundColor = ColorWhite) {
-        BottomNavigationItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.ic_search),
-                    contentDescription = "Home",
-                    Modifier.size(24.dp)
-                )
-            },
-            label = { Text("SEARCH") },
-            selected = true,
-            onClick = { /*TODO*/ }
-        )
-        BottomNavigationItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.ic_fav),
-                    contentDescription = "Search",
-                    Modifier.size(24.dp)
-                )
-            },
-            label = { Text("SAVE") },
-            selected = false,
-            onClick = { /*TODO*/ }
-        )
-        BottomNavigationItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.ic_trips),
-                    contentDescription = "TRIPS", Modifier.size(24.dp)
-                )
-            },
-            label = { Text("TRIPS") },
-            selected = false,
-            onClick = { /*TODO*/ }
-        )
-        BottomNavigationItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.ic_inbox),
-                    contentDescription = "Profile",
-                    Modifier.size(24.dp)
-                )
-            },
-            label = { Text("INBOX") },
-            selected = false,
-            onClick = { /*TODO*/ }
-        )
-        BottomNavigationItem(
-            icon = {
-                Icon(
-                    Icons.Filled.Person,
-                    contentDescription = "Profile"
+        BottomNavigationItem(icon = {
+            Icon(
+                painterResource(id = R.drawable.ic_search),
+                contentDescription = "Home",
+                Modifier.size(24.dp)
+            )
+        }, label = { Text("SEARCH") }, selected = true, onClick = { /*TODO*/ })
+        BottomNavigationItem(icon = {
+            Icon(
+                painterResource(id = R.drawable.ic_fav),
+                contentDescription = "Search",
+                Modifier.size(24.dp)
+            )
+        }, label = { Text("SAVE") }, selected = false, onClick = { /*TODO*/ })
+        BottomNavigationItem(icon = {
+            Icon(
+                painterResource(id = R.drawable.ic_trips),
+                contentDescription = "TRIPS",
+                Modifier.size(24.dp)
+            )
+        }, label = { Text("TRIPS") }, selected = false, onClick = { /*TODO*/ })
+        BottomNavigationItem(icon = {
+            Icon(
+                painterResource(id = R.drawable.ic_inbox),
+                contentDescription = "Profile",
+                Modifier.size(24.dp)
+            )
+        }, label = { Text("INBOX") }, selected = false, onClick = { /*TODO*/ })
+        BottomNavigationItem(icon = {
+            Icon(
+                Icons.Filled.Person, contentDescription = "Profile"
 
-                )
-            },
-            label = { Text("PROFILE") },
-            selected = false,
-            onClick = { /*TODO*/ }
-        )
+            )
+        }, label = { Text("PROFILE") }, selected = false, onClick = { /*TODO*/ })
     }
 }
 

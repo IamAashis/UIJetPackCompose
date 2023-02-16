@@ -11,5 +11,5 @@ data class Experience(
     @DrawableRes val iconId: Int,
     val fav: Boolean,
     var sizes: String,
-    var rating: String
+    var rating: Int
 )
