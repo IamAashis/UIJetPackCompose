@@ -1,6 +1,9 @@
 package com.jetpack.uijetpackcompose.ui
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -39,8 +42,16 @@ import com.jetpack.uijetpackcompose.ui.theme.*
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen() {
-    Box {
-        Column(modifier = Modifier.padding(10.dp)) {
+    val scrollState = rememberScrollState()
+    Box( // or whatever your parent composable is
+        modifier = Modifier
+            .scrollable(state = scrollState, orientation = Orientation.Vertical)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+//                .verticalScroll(rememberScrollState())
+        ) {
             SearchSection()
             ChipSection(types = mutableListOf("Dates", "Guests"))
             FeatureSection(
@@ -104,7 +115,7 @@ fun ExperienceSection(experience: Experience) {
                     .fillMaxHeight(), contentScale = ContentScale.Crop
             )
             Icon(
-                painter = painterResource(id = R.drawable.ic_favorite),
+                painter = painterResource(id = R.drawable.ic_save),
                 contentDescription = experience.title,
                 tint = Color.White,
                 modifier = Modifier.align(Alignment.TopEnd)
@@ -263,22 +274,63 @@ fun FeatureItem(feature: Features) {
 
 @Composable
 fun MyBottomNavigation() {
-    BottomNavigation() {
+    BottomNavigation(backgroundColor = ColorWhite) {
         BottomNavigationItem(
-            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-            label = { Text("Home") },
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_search),
+                    contentDescription = "Home",
+                    Modifier.size(24.dp)
+                )
+            },
+            label = { Text("SEARCH") },
             selected = true,
             onClick = { /*TODO*/ }
         )
         BottomNavigationItem(
-            icon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
-            label = { Text("Search") },
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_fav),
+                    contentDescription = "Search",
+                    Modifier.size(24.dp)
+                )
+            },
+            label = { Text("SAVE") },
             selected = false,
             onClick = { /*TODO*/ }
         )
         BottomNavigationItem(
-            icon = { Icon(Icons.Filled.Person, contentDescription = "Profile") },
-            label = { Text("Profile") },
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_trips),
+                    contentDescription = "TRIPS", Modifier.size(24.dp)
+                )
+            },
+            label = { Text("TRIPS") },
+            selected = false,
+            onClick = { /*TODO*/ }
+        )
+        BottomNavigationItem(
+            icon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_inbox),
+                    contentDescription = "Profile",
+                    Modifier.size(24.dp)
+                )
+            },
+            label = { Text("INBOX") },
+            selected = false,
+            onClick = { /*TODO*/ }
+        )
+        BottomNavigationItem(
+            icon = {
+                Icon(
+                    Icons.Filled.Person,
+                    contentDescription = "Profile"
+
+                )
+            },
+            label = { Text("PROFILE") },
             selected = false,
             onClick = { /*TODO*/ }
         )
