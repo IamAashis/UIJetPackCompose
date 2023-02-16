@@ -10,13 +10,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -26,8 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.jetpack.uijetpackcompose.R
 import com.jetpack.uijetpackcompose.ui.model.Experience
 import com.jetpack.uijetpackcompose.ui.model.Features
-import com.jetpack.uijetpackcompose.ui.theme.ColorBoxBorder
-import com.jetpack.uijetpackcompose.ui.theme.ColorWhite
+import com.jetpack.uijetpackcompose.ui.theme.*
 
 /**
  * Created by Aashis on 14,February,2023
@@ -36,8 +39,8 @@ import com.jetpack.uijetpackcompose.ui.theme.ColorWhite
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen() {
-    Box(modifier = Modifier.padding(10.dp)) {
-        Column {
+    Box {
+        Column(modifier = Modifier.padding(10.dp)) {
             SearchSection()
             ChipSection(types = mutableListOf("Dates", "Guests"))
             FeatureSection(
@@ -49,9 +52,14 @@ fun HomeScreen() {
             )
             TopRatedExperience(
                 listOf(
+                    Experience("This is title", "", R.drawable.houses, false, "", ""),
+                    Experience("This is title", "", R.drawable.houses, false, "", ""),
                     Experience("This is title", "", R.drawable.houses, false, "", "")
                 )
             )
+        }
+        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+            MyBottomNavigation()
         }
     }
 }
@@ -67,7 +75,7 @@ fun TopRatedExperience(listOfExperience: List<Experience>) {
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(start = 7.5.dp, end = 7.5.dp, bottom = 100.dp),
+        contentPadding = PaddingValues(start = 20.dp, end = 7.5.dp, bottom = 100.dp),
         modifier = Modifier.fillMaxHeight()
     ) {
         items(listOfExperience.size) {
@@ -78,40 +86,92 @@ fun TopRatedExperience(listOfExperience: List<Experience>) {
 
 @Composable
 fun ExperienceSection(experience: Experience) {
-    Column() {
+    Column(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp)) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(15.dp)
+                .width(200.dp)
+                .height(150.dp)
+                .padding(end = 9.dp)
+                .background(
+                    Color(R.color.black)
+                )
         ) {
             Image(
-                painter = painterResource(id = experience.iconId), contentDescription = "My Image"
+                painter = painterResource(id = experience.iconId),
+                contentDescription = "My Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(), contentScale = ContentScale.Crop
             )
             Icon(
                 painter = painterResource(id = R.drawable.ic_favorite),
                 contentDescription = experience.title,
                 tint = Color.White,
-                modifier = Modifier.align(Alignment.BottomStart)
+                modifier = Modifier.align(Alignment.TopEnd)
             )
         }
         Text(
-            text = "What can we help you find, Sandor?",
-            color = Color.Gray,
-            modifier = Modifier.padding(15.dp),
+            text = "What can we help you find",
+            color = TextGrey,
+            modifier = Modifier.padding(top = 5.dp),
             fontSize = 15.sp
         )
         Text(
             text = "What can we help you find, Sandor?",
             color = Color.Black,
-            modifier = Modifier.padding(15.dp),
-            fontSize = 20.sp, fontWeight = FontWeight.Bold
+            modifier = Modifier.padding(top = 2.dp),
+            fontSize = 15.sp, fontWeight = FontWeight.Bold
         )
         Text(
             text = "What can we help you find, Sandor?",
-            color = Color.Blue,
-            modifier = Modifier.padding(15.dp),
-            fontSize = 20.sp, fontWeight = FontWeight.Bold
+            color = TextColor,
+            modifier = Modifier.padding(top = 2.dp),
+            fontSize = 13.sp, fontWeight = FontWeight.Thin
         )
+        RatingSystem(5, {})
+    }
+}
+
+
+@Composable
+fun RatingSystem(
+    maxRating: Int = 5,
+    onRatingChanged: (Int) -> Unit
+) {
+    var currentRating by remember { mutableStateOf(0) }
+
+    Row {
+        for (i in 1..maxRating) {
+            if (i <= currentRating) {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = "Filled Star",
+                    tint = StarColor,
+                    modifier = Modifier
+                        .clickable {
+                            currentRating = i
+                            onRatingChanged(i)
+                        }
+                        .height(13.dp)
+                        .width(13.dp)
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Outlined.Star,
+                    contentDescription = "Outlined Star",
+                    tint = StarColor,
+                    modifier = Modifier
+                        .clickable {
+                            currentRating = i
+                            onRatingChanged(i)
+                        }
+                        .height(13.dp)
+                        .width(13.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+        }
     }
 }
 
@@ -200,3 +260,28 @@ fun FeatureItem(feature: Features) {
         }
     }
 }
+
+@Composable
+fun MyBottomNavigation() {
+    BottomNavigation() {
+        BottomNavigationItem(
+            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
+            label = { Text("Home") },
+            selected = true,
+            onClick = { /*TODO*/ }
+        )
+        BottomNavigationItem(
+            icon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
+            label = { Text("Search") },
+            selected = false,
+            onClick = { /*TODO*/ }
+        )
+        BottomNavigationItem(
+            icon = { Icon(Icons.Filled.Person, contentDescription = "Profile") },
+            label = { Text("Profile") },
+            selected = false,
+            onClick = { /*TODO*/ }
+        )
+    }
+}
+
