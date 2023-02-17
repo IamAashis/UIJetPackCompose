@@ -1,9 +1,6 @@
 package com.jetpack.uijetpackcompose.ui
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -14,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
@@ -28,7 +24,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpack.uijetpackcompose.R
@@ -44,21 +39,20 @@ import com.jetpack.uijetpackcompose.ui.theme.*
 @Composable
 fun HomeScreen() {
     val scrollState = rememberScrollState()
-    Box( // or whatever your parent composable is
-        modifier = Modifier.scrollable(state = scrollState, orientation = Orientation.Vertical)
-    ) {
+    Box {
         Column(
-            modifier = Modifier.padding(10.dp)
-//                .verticalScroll(rememberScrollState())
-        ) {
-//            SearchSection()
+            modifier = Modifier
+                .padding(10.dp)
+        )
+        {
             SearchView()
             ChipSection(types = mutableListOf("Dates", "Guests"))
             FeatureSection(
                 listOf(
                     Features("Houses", R.drawable.houses),
                     Features("Experiences", R.drawable.experience),
-                    Features("Restaurant", R.drawable.restaurant)
+                    Features("Restaurant", R.drawable.restaurant),
+                    Features("Houses", R.drawable.houses),
                 )
             )
             TopRatedExperience(
@@ -102,6 +96,7 @@ fun HomeScreen() {
                 )
             )
         }
+
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             MyBottomNavigation()
         }
