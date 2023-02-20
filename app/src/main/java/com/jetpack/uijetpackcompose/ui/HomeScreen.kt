@@ -42,10 +42,8 @@ fun HomeScreen() {
     val scrollState = rememberScrollState()
     Box {
         Column(
-            modifier = Modifier
-                .padding(10.dp)
-        )
-        {
+            modifier = Modifier.padding(10.dp)
+        ) {
             SearchView()
             ChipSection(types = mutableListOf("Dates", "Guests"))
             FeatureSection(
@@ -106,10 +104,11 @@ fun HomeScreen() {
 @Composable
 fun TopRatedExperience(listOfExperience: List<Experience>) {
     Text(
-        text = "Top-rated experiences",
+        text = "Top-rated Experiences",
         modifier = Modifier.padding(start = 20.dp),
         fontSize = 21.sp,
-        fontWeight = FontWeight.Bold
+        style = MaterialTheme.typography.h1,
+        fontWeight = FontWeight.Bold,
     )
 
     LazyVerticalGrid(
@@ -148,7 +147,9 @@ fun ExperienceSection(experience: Experience) {
                 painter = painterResource(id = R.drawable.ic_save),
                 contentDescription = experience.title,
                 tint = Color.White,
-                modifier = Modifier.align(Alignment.TopEnd)
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 5.dp, end = 5.dp)
             )
         }
         Text(
@@ -159,7 +160,7 @@ fun ExperienceSection(experience: Experience) {
         )
         Text(
             text = experience.subTitle,
-            color = Color.Black,
+            style = MaterialTheme.typography.h3,
             modifier = Modifier.padding(top = 2.dp),
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold
@@ -269,8 +270,9 @@ fun ChipSection(types: List<String>) {
 fun FeatureSection(features: List<Features>) {
     Column() {
         Text(
+            style = MaterialTheme.typography.h2,
             text = "What can we help you find, Sandor?",
-            fontFamily = FontFamily.SansSerif, modifier = Modifier.padding(15.dp)
+            fontFamily = FontFamily.SansSerif, modifier = Modifier.padding(15.dp),
         )
         LazyHorizontalGrid(
             rows = GridCells.Fixed(1),
@@ -318,34 +320,34 @@ fun MyBottomNavigation() {
                 contentDescription = "Home",
                 Modifier.size(24.dp)
             )
-        }, label = { Text("SEARCH") }, selected = true, onClick = { /*TODO*/ })
+        }, label = { Text("Search") }, selected = true, onClick = { /*TODO*/ })
         BottomNavigationItem(icon = {
             Icon(
                 painterResource(id = R.drawable.ic_fav),
                 contentDescription = "Search",
                 Modifier.size(24.dp)
             )
-        }, label = { Text("SAVE") }, selected = false, onClick = { /*TODO*/ })
+        }, label = { Text("Save") }, selected = false, onClick = { /*TODO*/ })
         BottomNavigationItem(icon = {
             Icon(
                 painterResource(id = R.drawable.ic_trips),
                 contentDescription = "TRIPS",
                 Modifier.size(24.dp)
             )
-        }, label = { Text("TRIPS") }, selected = false, onClick = { /*TODO*/ })
+        }, label = { Text("Trips") }, selected = false, onClick = { /*TODO*/ })
         BottomNavigationItem(icon = {
             Icon(
                 painterResource(id = R.drawable.ic_inbox),
                 contentDescription = "Profile",
                 Modifier.size(24.dp)
             )
-        }, label = { Text("INBOX") }, selected = false, onClick = { /*TODO*/ })
+        }, label = { Text("Inbox") }, selected = false, onClick = { /*TODO*/ })
         BottomNavigationItem(icon = {
             Icon(
                 Icons.Filled.Person, contentDescription = "Profile"
 
             )
-        }, label = { Text("PROFILE") }, selected = false, onClick = { /*TODO*/ })
+        }, label = { Text("Profile") }, selected = false, onClick = { /*TODO*/ })
     }
 }
 
