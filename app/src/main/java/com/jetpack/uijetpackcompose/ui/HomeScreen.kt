@@ -22,6 +22,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -96,7 +97,6 @@ fun HomeScreen() {
                 )
             )
         }
-
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             MyBottomNavigation()
         }
@@ -122,6 +122,7 @@ fun TopRatedExperience(listOfExperience: List<Experience>) {
         }
     }
 }
+
 
 @Composable
 fun ExperienceSection(experience: Experience) {
@@ -173,7 +174,6 @@ fun ExperienceSection(experience: Experience) {
         RatingSystem(experience.rating, {})
     }
 }
-
 
 @Composable
 fun RatingSystem(
@@ -269,7 +269,8 @@ fun ChipSection(types: List<String>) {
 fun FeatureSection(features: List<Features>) {
     Column() {
         Text(
-            text = "What can we help you find, Sandor?", modifier = Modifier.padding(15.dp)
+            text = "What can we help you find, Sandor?",
+            fontFamily = FontFamily.SansSerif, modifier = Modifier.padding(15.dp)
         )
         LazyHorizontalGrid(
             rows = GridCells.Fixed(1),
