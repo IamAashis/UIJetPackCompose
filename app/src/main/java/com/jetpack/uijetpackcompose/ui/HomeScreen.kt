@@ -237,9 +237,10 @@ fun SearchView() {
         ),
         keyboardActions = KeyboardActions(onSearch = {}),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = SearchColor, unfocusedBorderColor = SearchColor
+            focusedBorderColor = SearchColor,
+            unfocusedBorderColor = SearchColor,
+            cursorColor = Color.Black
         ),
-
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 10.dp, end = 20.dp, top = 20.dp, bottom = 20.dp)
@@ -268,7 +269,7 @@ fun ChipSection(types: List<String>) {
 @ExperimentalFoundationApi
 @Composable
 fun FeatureSection(features: List<Features>) {
-    Column() {
+    Column {
         Text(
             style = MaterialTheme.typography.h2,
             text = "What can we help you find, Sandor?",
