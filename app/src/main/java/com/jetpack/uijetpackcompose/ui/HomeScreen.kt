@@ -122,7 +122,6 @@ fun TopRatedExperience(listOfExperience: List<Experience>) {
     }
 }
 
-
 @Composable
 fun ExperienceSection(experience: Experience) {
     Column(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp)) {
@@ -273,7 +272,7 @@ fun FeatureSection(features: List<Features>) {
         Text(
             style = MaterialTheme.typography.h2,
             text = "What can we help you find, Sandor?",
-            fontFamily = FontFamily.SansSerif, modifier = Modifier.padding(15.dp),
+            modifier = Modifier.padding(15.dp),
         )
         LazyHorizontalGrid(
             rows = GridCells.Fixed(1),
@@ -301,9 +300,7 @@ fun FeatureItem(feature: Features) {
                     .height(90.dp),
                 contentScale = ContentScale.Crop
             )
-            Box(
-
-            ) {
+            Box {
                 Text(
                     text = feature.title, modifier = Modifier.fillMaxWidth(), color = Color.Black
                 )
