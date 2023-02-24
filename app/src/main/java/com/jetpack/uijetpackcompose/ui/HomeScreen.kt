@@ -2,10 +2,12 @@ package com.jetpack.uijetpackcompose.ui
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,60 +42,124 @@ import com.jetpack.uijetpackcompose.ui.theme.*
 @Composable
 fun HomeScreen() {
     val scrollState = rememberScrollState()
+    val wishlisted = listOf(
+        Experience(
+            "This is title",
+            "desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            R.drawable.ic_image_one,
+            false,
+            "",
+            3
+        ), Experience(
+            "This is title",
+            "Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+            R.drawable.ic_image_two,
+            false,
+            "From Ft108,712 per night",
+            4
+        ), Experience(
+            "This is title",
+            "There are many variations of passages of Lorem Ipsum available, but the majority",
+            R.drawable.ic_image_three,
+            false,
+            "From Ft108,712 per night",
+            5
+        ), Experience(
+            "This is title",
+            "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a ",
+            R.drawable.ic_image_four,
+            false,
+            "From Ft108,712 per night",
+            4
+        ), Experience(
+            "This is title",
+            "Section 1.10.32 of de Finibus Bonorum et Malorum, written by Cicero in 45 BC",
+            R.drawable.ic_image_five,
+            false,
+            "From Ft108,712 per night",
+            3
+        )
+    )
+
     Box {
-        Column(
-            modifier = Modifier.padding(10.dp)
-        ) {
-            SearchView()
-            ChipSection(types = mutableListOf("Dates", "Guests"))
-            FeatureSection(
-                listOf(
-                    Features("Houses", R.drawable.houses),
-                    Features("Experiences", R.drawable.experience),
-                    Features("Restaurant", R.drawable.restaurant),
-                    Features("Houses", R.drawable.houses),
-                )
-            )
-            TopRatedExperience(
-                listOf(
-                    Experience(
-                        "This is title",
-                        "desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-                        R.drawable.ic_image_one,
-                        false,
-                        "",
-                        3
-                    ), Experience(
-                        "This is title",
-                        "Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
-                        R.drawable.ic_image_two,
-                        false,
-                        "From Ft108,712 per night",
-                        4
-                    ), Experience(
-                        "This is title",
-                        "There are many variations of passages of Lorem Ipsum available, but the majority",
-                        R.drawable.ic_image_three,
-                        false,
-                        "From Ft108,712 per night",
-                        5
-                    ), Experience(
-                        "This is title",
-                        "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a ",
-                        R.drawable.ic_image_four,
-                        false,
-                        "From Ft108,712 per night",
-                        4
-                    ), Experience(
-                        "This is title",
-                        "Section 1.10.32 of de Finibus Bonorum et Malorum, written by Cicero in 45 BC",
-                        R.drawable.ic_image_five,
-                        false,
-                        "From Ft108,712 per night",
-                        3
+
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+            item {
+                SearchView()
+            }
+            item {
+                ChipSection(types = mutableListOf("Dates", "Guests"))
+            }
+            item {
+                FeatureSection(
+                    listOf(
+                        Features("Houses", R.drawable.houses),
+                        Features("Experiences", R.drawable.experience),
+                        Features("Restaurant", R.drawable.restaurant),
+                        Features("Houses", R.drawable.houses),
                     )
                 )
-            )
+            }
+
+            items(wishlisted.windowed(3, 2, true)) { sublist ->
+//                Row(Modifier.fillMaxWidth()) {
+                    sublist.forEach { item ->
+                        ExperienceSection(item)
+//                        Text(
+//                            item, modifier = Modifier
+//                                .height(120.dp)
+//                                .padding(4.dp)
+//                                .background(Color.Yellow)
+//                                .fillParentMaxWidth(.5f)
+//                        )
+                    }
+//                }
+            }
+
+//            item {
+//                TopRatedExperience(
+//                    listOf(
+//                        Experience(
+//                            "This is title",
+//                            "desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+//                            R.drawable.ic_image_one,
+//                            false,
+//                            "",
+//                            3
+//                        ), Experience(
+//                            "This is title",
+//                            "Various versions have evolved over the years, sometimes by accident, sometimes on purpose",
+//                            R.drawable.ic_image_two,
+//                            false,
+//                            "From Ft108,712 per night",
+//                            4
+//                        ), Experience(
+//                            "This is title",
+//                            "There are many variations of passages of Lorem Ipsum available, but the majority",
+//                            R.drawable.ic_image_three,
+//                            false,
+//                            "From Ft108,712 per night",
+//                            5
+//                        ), Experience(
+//                            "This is title",
+//                            "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a ",
+//                            R.drawable.ic_image_four,
+//                            false,
+//                            "From Ft108,712 per night",
+//                            4
+//                        ), Experience(
+//                            "This is title",
+//                            "Section 1.10.32 of de Finibus Bonorum et Malorum, written by Cicero in 45 BC",
+//                            R.drawable.ic_image_five,
+//                            false,
+//                            "From Ft108,712 per night",
+//                            3
+//                        )
+//                    )
+//                )
+//            }
+
         }
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             MyBottomNavigation()
